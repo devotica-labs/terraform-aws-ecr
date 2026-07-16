@@ -1,0 +1,50 @@
+#
+# Canonical configuration for README.md (cloudposse-style doc standard,
+# native to Devotica). Run `make readme` to regenerate the terraform-docs
+# section of README.md.
+#
+
+name: terraform-aws-ecr
+license: APACHE2
+github_repo: devotica-labs/terraform-aws-ecr
+
+badges:
+  - name: CI
+    image: https://github.com/devotica-labs/terraform-aws-ecr/actions/workflows/ci.yml/badge.svg
+    url: https://github.com/devotica-labs/terraform-aws-ecr/actions/workflows/ci.yml
+  - name: Release
+    image: https://github.com/devotica-labs/terraform-aws-ecr/actions/workflows/release.yml/badge.svg
+    url: https://github.com/devotica-labs/terraform-aws-ecr/actions/workflows/release.yml
+  - name: License
+    image: https://img.shields.io/badge/License-Apache_2.0-blue.svg
+    url: LICENSE
+
+related:
+  - name: terraform-aws-ecs-fargate
+    description: ECS Fargate service that pulls images from repositories created here.
+    url: https://github.com/devotica-labs/terraform-aws-ecs-fargate
+  - name: terraform-aws-eks-cluster
+    description: EKS cluster whose nodes pull images from this registry.
+    url: https://github.com/devotica-labs/terraform-aws-eks-cluster
+
+description: |-
+  Terraform module for one or more **Amazon ECR** private container repositories
+  — the image registry ECS Fargate and EKS pull from. Fintech-safe defaults:
+  IMMUTABLE tags, scan-on-push, KMS encryption, `force_delete` off, and a
+  batteries-included lifecycle policy (untagged expiry + image-count cap with
+  protected release tags). Optional cross-account read/write repository policy.
+
+introduction: |-
+  This module creates one [Amazon ECR](https://docs.aws.amazon.com/AmazonECR/latest/userguide/what-is-ecr.html)
+  repository per name (defaulting to the composed label id), each with immutable
+  tags, scan-on-push, KMS encryption, and a self-pruning lifecycle policy. A
+  repository access policy is attached only when `read_principals` /
+  `write_principals` (or `additional_policy_statements`) are supplied, letting a
+  workload account pull while a CI/CD role pushes.
+
+usage: |-
+  See [`examples/basic`](examples/basic) for a single repository on defaults and
+  [`examples/complete`](examples/complete) for a multi-repo registry with a
+  customer-managed key, tuned retention, and cross-account access.
+
+contributors: []
